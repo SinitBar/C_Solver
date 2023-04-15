@@ -1,0 +1,17 @@
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\bin\Debug\net6.0-windows\C_Solver.exe
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\bin\Debug\net6.0-windows\C_Solver.deps.json
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\bin\Debug\net6.0-windows\C_Solver.runtimeconfig.json
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\bin\Debug\net6.0-windows\C_Solver.dll
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\bin\Debug\net6.0-windows\C_Solver.pdb
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.csproj.AssemblyReference.cache
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.Form.resources
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.csproj.GenerateResource.cache
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.AssemblyInfoInputs.cache
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.AssemblyInfo.cs
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.csproj.CoreCompileInputs.cache
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.dll
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\refint\C_Solver.dll
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.pdb
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\C_Solver.genruntimeconfig.cache
+C:\Users\varka\Documents\Pray\C_Solver\C_Solver\obj\Debug\net6.0-windows\ref\C_Solver.dll
