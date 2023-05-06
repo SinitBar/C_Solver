@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace C_Solver
+﻿namespace C_Solver
 {
     internal class Solver
     {
@@ -18,7 +12,7 @@ namespace C_Solver
             {
                 for (int i = 0; i < rows.Count; i++)
                 {
-                    List<int> row = rows[i].Split(' ')
+                    List<int> row = rows[i].Trim(new Char[] { ' ', '\r' }).Split(' ')
                         .Select(n => Convert.ToInt32(n)).ToList();
                     for (int j = 0; j < row.Count; j++)
                         if (row[j] != 0 && row[j] != 1) 
@@ -110,9 +104,6 @@ namespace C_Solver
         public List<int> secondStep(Graph graph, List<int>? Clast = null)
         {
             Graph graphCopy = new Graph(graph.Matrix, graph.Vertexes);
-            //List<int> graphVertexes = new List<int>(graph.Vertexes.Count);
-            //for (int i = 0; i < graphVertexes.Count; i++)
-            //    graphVertexes.Add(i);
             int indexOfVertexWithMaxDegree;
             do
             {
@@ -130,7 +121,6 @@ namespace C_Solver
                 if (indexOfVertexWithMaxDegree == -1)
                     break;
                 int removedVertex = graphCopy.removeVertex(indexOfVertexWithMaxDegree);
-                //graphVertexes.RemoveAt(indexOfVertexWithMaxDegree);
                 if (Clast != null)
                     Clast.Add(removedVertex);
             } while (indexOfVertexWithMaxDegree >= 0);
