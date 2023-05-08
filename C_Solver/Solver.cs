@@ -79,7 +79,8 @@
                 for (int j = 1; j < C.Count; j++)
                 {
                     int partVectDeg = Graph.partialVertexDegree(Clast[i], C[j]);
-                    if (partVectDeg < CiMinConnectionsCount)
+                    if (partVectDeg < CiMinConnectionsCount || 
+                        ((partVectDeg == CiMinConnectionsCount) && (C[Cindex].Count > C[j].Count)))
                     {
                         CiMinConnectionsCount = partVectDeg;
                         Cindex = j;
