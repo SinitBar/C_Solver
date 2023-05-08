@@ -10,19 +10,19 @@ namespace C_Solver
     {
         public List<List<int>> Matrix { get; private set; }
         public List<int> Vertexes { get; private set; }
-        public Graph(List<List<int>> matr, List<int> vertexes)
+        public Graph(List<List<int>> matrix, List<int> vertexes)
         {
             if (vertexes.Count == 0) // first create time
             {
-                for (int i = 0; i < matr.Count; i++)
+                for (int i = 0; i < matrix.Count; i++)
                     vertexes.Add(i);
             }
 
-            Matrix = new List<List<int>> (matr.Count);
-            for (int i = 0; i < matr.Count; i++) 
+            Matrix = new List<List<int>> (matrix.Count);
+            for (int i = 0; i < matrix.Count; i++) 
             { 
                 Matrix.Add(new List<int>());
-                Matrix[i].AddRange(matr[i]);
+                Matrix[i].AddRange(matrix[i]);
             }
             Vertexes = new List<int>(vertexes.Count);
             Vertexes.AddRange(vertexes);
