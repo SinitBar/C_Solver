@@ -68,21 +68,44 @@
                 }
                 C[Cindex].Add(currentVertex);
             }
+
             // work with Clast
-            Cindex = -1;
-            int CminDegreeSum = -1;
-            for (int i = 0; i < C.Count; i++)
+            // for every vertex in Clast select C[i] list to add it
+            // selection criteria: min amount of connected vertexes
+            for (int i = 0; i < Clast.Count; i++)
             {
-                int CjDegreeSum = 0;
-                for (int j = 0; j < C[i].Count; j++)
-                    CjDegreeSum += Graph.vertexDegree(C[i][j]);
-                if (CjDegreeSum < CminDegreeSum || CminDegreeSum < 0)
+                int CiMinConnectionsCount = Graph.partialVertexDegree(Clast[i], C[0]); ;
+                Cindex = 0;
+                for (int j = 1; j < C.Count; j++)
                 {
-                    CminDegreeSum = CjDegreeSum;
-                    Cindex = i;
+                    int partVectDeg = Graph.partialVertexDegree(Clast[i], C[j]);
+                    if (partVectDeg < CiMinConnectionsCount)
+                    {
+                        CiMinConnectionsCount = partVectDeg;
+                        Cindex = j;
+                    }
                 }
+                C[Cindex].Add(Clast[i]);
             }
-            C[Cindex].AddRange(Clast);
+            // end of work with Clast
+
+            //// work with Clast
+            //Cindex = -1;
+            //int CminDegreeSum = -1;
+            //for (int i = 0; i < C.Count; i++)
+            //{
+            //    int CjDegreeSum = 0;
+            //    for (int j = 0; j < C[i].Count; j++)
+            //        CjDegreeSum += Graph.vertexDegree(C[i][j]);
+            //    if (CjDegreeSum < CminDegreeSum || CminDegreeSum < 0)
+            //    {
+            //        CminDegreeSum = CjDegreeSum;
+            //        Cindex = i;
+            //    }
+            //}
+            //C[Cindex].AddRange(Clast);
+            //// end of work with Clast
+
             for (int i = 0; i < C.Count; i++)
                 C[i].Sort();
             return C;
