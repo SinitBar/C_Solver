@@ -8,24 +8,30 @@ namespace C_Solver
 {
     internal class Graph
     {
-        public List<List<int>> Matrix { get; private set; }
+        public List<List<double>> Matrix { get; private set; }
         public List<int> Vertexes { get; private set; }
-        public Graph(List<List<int>> matrix, List<int> vertexes)
+        public Graph(List<List<double>> matrix, List<int> vertexes)
         {
-            if (vertexes.Count == 0) // first create time
+            int size = vertexes.Count;
+            if (size == 0)
             {
-                for (int i = 0; i < matrix.Count; i++)
-                    vertexes.Add(i);
+                size = matrix.Count;
+                Vertexes = new List<int>(size);
+                for (int i = 0; i < size; i++)
+                    Vertexes.Add(i);
+            }
+            else
+            {
+                Vertexes = new List<int>(size);
+                Vertexes.AddRange(vertexes);
             }
 
-            Matrix = new List<List<int>> (matrix.Count);
-            for (int i = 0; i < matrix.Count; i++) 
-            { 
-                Matrix.Add(new List<int>());
+            Matrix = new List<List<double>>(matrix.Count);
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                Matrix.Add(new List<double>());
                 Matrix[i].AddRange(matrix[i]);
             }
-            Vertexes = new List<int>(vertexes.Count);
-            Vertexes.AddRange(vertexes);
         }
         public int removeVertex(int vertexIndex)
         {
@@ -49,14 +55,14 @@ namespace C_Solver
             }
         }
 
-        public int vertexDegree (int vertexIndex)
+        public double WeightedVertexDegree(int vertexIndex)
         {
             return Matrix[vertexIndex].Sum();
         }
 
-        public int partialVertexDegree(int vertexIndex, List<int> vertexIndexes)
+        public double PartialWeightedVertexDegree(int vertexIndex, List<int> vertexIndexes)
         {
-            int sum = 0;
+            double sum = 0;
             foreach (int vertInd in vertexIndexes)
                 sum += Matrix[vertexIndex][vertInd];
             return sum;

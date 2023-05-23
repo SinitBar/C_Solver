@@ -4,28 +4,30 @@
     {
         Graph Graph;
         public int AmountOfLayers { get; private set; } // k
-        public Solver (string fileContent, int amountOfLayers = 4)
+        public Solver(string fileContent, int amountOfLayers = 4)
         {
-            List<List<int>> matrix = new List<List<int>>();
-            List<string> rows = fileContent.Split('\n').ToList();
+            List<List<double>> matrix = new List<List<double>>();
+            List<string> rows = fileContent.Replace('.', ',').Split('\n').ToList();
             try
             {
                 for (int i = 0; i < rows.Count; i++)
                 {
-                    List<int> row = rows[i].Trim(new Char[] { ' ', '\r' }).Split(' ')
-                        .Select(n => Convert.ToInt32(n)).ToList();
+                    List<double> row = rows[i].Trim(new Char[] { ' ', '\r' }).Split(' ')
+                        .Select(n => Convert.ToDouble(n)).ToList();
                     for (int j = 0; j < row.Count; j++)
-                        if (row[j] != 0 && row[j] != 1) 
-                            throw new ArgumentException("element should be 1 or 0");
+                        if (row[j] < 0)
+                            throw new ArgumentException("elements should be positive");
+                    //if (row[j] != 0 && row[j] != 1) 
+                    //    throw new ArgumentException("element should be 1 or 0");
                     matrix.Add(row);
                 }
                 Graph = new Graph(matrix, new());
                 this.AmountOfLayers = amountOfLayers;
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 this.AmountOfLayers = 0;
-                matrix = new List<List<int>>();
+                matrix = new List<List<double>>();
                 Graph = new Graph(matrix, new());
             }
         }
@@ -48,14 +50,14 @@
             C[AmountOfLayers - k] = secondStep(graphCopy, Clast);
             // C and Cm and Clast are done
             // work with Cm
-            int Cindex = -1;
+            int Cindex;
             while (Cm.Count > 0)
             {
                 int currentVertex = Cm.Pop();
                 Cindex = -1;
-                for(int i = 0; i < C.Count; i++)
+                for (int i = 0; i < C.Count; i++)
                 {
-                    if (Graph.partialVertexDegree(currentVertex, C[i]) == 0)
+                    if (Graph.PartialWeightedVertexDegree(currentVertex, C[i]) == 0)
                     {
                         if (Cindex < 0)
                             Cindex = i;
@@ -66,6 +68,13 @@
                         }
                     }
                 }
+                if (Cindex < 0) // then find C with min amount of vertexes
+                {
+                    Cindex = 0;
+                    for (int i = 1; i < C.Count; i++)
+                        if (C[i].Count < C[Cindex].Count)
+                            Cindex = i;
+                }
                 C[Cindex].Add(currentVertex);
             }
 
@@ -74,12 +83,12 @@
             // selection criteria: min amount of connected vertexes
             for (int i = 0; i < Clast.Count; i++)
             {
-                int CiMinConnectionsCount = Graph.partialVertexDegree(Clast[i], C[0]); ;
+                double CiMinConnectionsCount = Graph.PartialWeightedVertexDegree(Clast[i], C[0]); ;
                 Cindex = 0;
                 for (int j = 1; j < C.Count; j++)
                 {
-                    int partVectDeg = Graph.partialVertexDegree(Clast[i], C[j]);
-                    if (partVectDeg < CiMinConnectionsCount || 
+                    double partVectDeg = Graph.PartialWeightedVertexDegree(Clast[i], C[j]);
+                    if (partVectDeg < CiMinConnectionsCount ||
                         ((partVectDeg == CiMinConnectionsCount) && (C[Cindex].Count > C[j].Count)))
                     {
                         CiMinConnectionsCount = partVectDeg;
@@ -90,23 +99,6 @@
             }
             // end of work with Clast
 
-            //// work with Clast
-            //Cindex = -1;
-            //int CminDegreeSum = -1;
-            //for (int i = 0; i < C.Count; i++)
-            //{
-            //    int CjDegreeSum = 0;
-            //    for (int j = 0; j < C[i].Count; j++)
-            //        CjDegreeSum += Graph.vertexDegree(C[i][j]);
-            //    if (CjDegreeSum < CminDegreeSum || CminDegreeSum < 0)
-            //    {
-            //        CminDegreeSum = CjDegreeSum;
-            //        Cindex = i;
-            //    }
-            //}
-            //C[Cindex].AddRange(Clast);
-            //// end of work with Clast
-
             for (int i = 0; i < C.Count; i++)
                 C[i].Sort();
             return C;
@@ -116,7 +108,7 @@
         {
             for (int i = 0; i < graph.Matrix.Count; i++)
             {
-                if (graph.vertexDegree(i) < k)
+                if (graph.WeightedVertexDegree(i) < k)
                 {
                     Cm.Push(graph.Vertexes[i]);
                     graph.removeVertex(i);
@@ -127,15 +119,18 @@
 
         public List<int> secondStep(Graph graph, List<int>? Clast = null)
         {
+            if (graph.Matrix.Count == 0)
+                return graph.Vertexes;
+
             Graph graphCopy = new Graph(graph.Matrix, graph.Vertexes);
             int indexOfVertexWithMaxDegree;
             do
             {
                 indexOfVertexWithMaxDegree = -1;
-                int maxVertexDegree = 0;
+                double maxVertexDegree = 0;
                 for (int i = 0; i < graphCopy.Matrix.Count; i++)
                 {
-                    int currentVertexDegree = graphCopy.vertexDegree(i);
+                    double currentVertexDegree = graphCopy.WeightedVertexDegree(i);
                     if (currentVertexDegree > maxVertexDegree)
                     {
                         maxVertexDegree = currentVertexDegree;
@@ -149,6 +144,7 @@
                     Clast.Add(removedVertex);
             } while (indexOfVertexWithMaxDegree >= 0);
             graph.removeVertexes(graphCopy.Vertexes);
+
             return graphCopy.Vertexes;
         }
     }

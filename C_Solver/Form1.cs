@@ -65,7 +65,7 @@ namespace C_Solver
             string result = "";
             for (int i = 0; i < C.Count; i++)
                 result += (C[i] + 1).ToString() + ", ";
-            return result.Substring(0, result.Length - 2);
+            return (C.Count > 0) ? result.Substring(0, result.Length - 2) : result;
         }
     }
 }
